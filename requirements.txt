@@ -3,4 +3,3 @@ tensorflow
 nltk
 pandas
 numpy
-pickle
