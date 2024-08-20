@@ -23,9 +23,6 @@ stop_words = set(stopwords.words('english'))
 model_path = 'emotion_classification_model.h5'  # Replace with the actual path
 model = load_model(model_path)
 
-# Load the tokenizer
-with open('tokenizer.pickle', 'rb') as handle:
-    tokenizer = pickle.load(handle)
 
 # Function to preprocess text
 def preprocess_text(text):
