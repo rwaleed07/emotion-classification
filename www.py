@@ -8,12 +8,13 @@ from nltk.stem import WordNetLemmatizer
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-
-
-# Download necessary NLTK data
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordnet')
+# Download necessary NLTK data with error handling
+try:
+    nltk.download('punkt')
+    nltk.download('stopwords')
+    nltk.download('wordnet')
+except:
+    st.write("Error downloading NLTK data. Please check your environment.")
 
 # Initialize tools
 lemmatizer = WordNetLemmatizer()
@@ -22,7 +23,6 @@ stop_words = set(stopwords.words('english'))
 # Load the model
 model_path = 'emotion_classification_model.h5'  # Replace with the actual path
 model = load_model(model_path)
-
 
 # Function to preprocess text
 def preprocess_text(text):
@@ -61,3 +61,4 @@ if st.button("Classify"):
         st.write(f"The predicted emotion is: **{predicted_emotion.capitalize()}**")
     else:
         st.write("Please enter some text for classification.")
+
