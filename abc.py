@@ -88,6 +88,15 @@ if st.button("Classify"):
             # Predict the emotion
             prediction = model.predict(text_pad)
             predicted_class = np.argmax(prediction, axis=1)[0]
+          
+# Debugging: Display the prediction probabilities
+st.write(f"Prediction Probabilities: {prediction}")
+
+predicted_class = np.argmax(prediction, axis=1)[0]
+
+# Debugging: Display the predicted class index
+st.write(f"Predicted Class Index: {predicted_class}")
+
 
             # Define emotion labels (adjust based on your dataset)
             emotion_labels = ['sadness', 'joy','love','anger','fear','surprise'  ]  # Update according to your dataset
@@ -99,16 +108,6 @@ if st.button("Classify"):
             st.write("Error during prediction: ", e)
     else:
         st.write("Please enter some text for classification.")
-# Predict the emotion
-prediction = model.predict(text_pad)
-
-# Debugging: Display the prediction probabilities
-st.write(f"Prediction Probabilities: {prediction}")
-
-predicted_class = np.argmax(prediction, axis=1)[0]
-
-# Debugging: Display the predicted class index
-st.write(f"Predicted Class Index: {predicted_class}")
 
 
 
