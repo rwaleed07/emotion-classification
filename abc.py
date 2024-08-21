@@ -32,25 +32,6 @@ try:
     #     tokenizer = pickle.load(handle)
 except Exception as e:
     st.write("Error initializing/loading tokenizer: ", e)
-# Debugging: Display the processed text
-st.write(f"Processed Text: {processed_text}")
-
-# Convert text to sequence
-text_seq = tokenizer.texts_to_sequences([processed_text])
-
-# Debugging: Display the tokenized sequence
-st.write(f"Tokenized Sequence: {text_seq}")
-
-# If the tokenized sequence is empty, the tokenizer might not match your vocabulary.
-if not text_seq[0]:
-    st.write("Warning: The tokenized sequence is empty, indicating a mismatch with the training tokenizer.")
-    
-# Define max_len (ensure this matches your model's training)
-max_len = 100  # Adjust based on training
-text_pad = pad_sequences(text_seq, maxlen=max_len)
-
-# Debugging: Display the padded sequence
-st.write(f"Padded Sequence: {text_pad}")
 
 # Function to preprocess text without NLTK
 def preprocess_text(text):
