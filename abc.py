@@ -23,7 +23,16 @@ try:
     model = load_model(model_path)
 except Exception as e:
     st.write("Error loading model: ", e)
-  # Debugging: Display the processed text
+
+# Initialize or load tokenizer (update this to match your training setup)
+try:
+    tokenizer = Tokenizer()  # Define the tokenizer
+    # If you have a saved tokenizer, load it here:
+    # with open('tokenizer.pickle', 'rb') as handle:
+    #     tokenizer = pickle.load(handle)
+except Exception as e:
+    st.write("Error initializing/loading tokenizer: ", e)
+# Debugging: Display the processed text
 st.write(f"Processed Text: {processed_text}")
 
 # Convert text to sequence
@@ -42,16 +51,6 @@ text_pad = pad_sequences(text_seq, maxlen=max_len)
 
 # Debugging: Display the padded sequence
 st.write(f"Padded Sequence: {text_pad}")
-
-
-# Initialize or load tokenizer (update this to match your training setup)
-try:
-    tokenizer = Tokenizer()  # Define the tokenizer
-    # If you have a saved tokenizer, load it here:
-    # with open('tokenizer.pickle', 'rb') as handle:
-    #     tokenizer = pickle.load(handle)
-except Exception as e:
-    st.write("Error initializing/loading tokenizer: ", e)
 
 # Function to preprocess text without NLTK
 def preprocess_text(text):
@@ -88,16 +87,9 @@ if st.button("Classify"):
             # Predict the emotion
             prediction = model.predict(text_pad)
             predicted_class = np.argmax(prediction, axis=1)[0]
-          
-
-predicted_class = np.argmax(prediction, axis=1)[0]
-
-# Debugging: Display the predicted class index
-st.write(f"Predicted Class Index: {predicted_class}")
-
 
             # Define emotion labels (adjust based on your dataset)
-            emotion_labels = ['sadness', 'joy','love','anger','fear','surprise'  ]  # Update according to your dataset
+            emotion_labels = ['anger', 'love', 'fear', 'joy', 'sadness', 'surprise']  # Update according to your dataset
             predicted_emotion = emotion_labels[predicted_class]
 
             # Display the result
@@ -106,6 +98,7 @@ st.write(f"Predicted Class Index: {predicted_class}")
             st.write("Error during prediction: ", e)
     else:
         st.write("Please enter some text for classification.")
+
 
 
 
