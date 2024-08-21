@@ -70,7 +70,7 @@ if st.button("Classify"):
             predicted_class = np.argmax(prediction, axis=1)[0]
 
             # Define emotion labels (adjust based on your dataset)
-            emotion_labels = ['anger', 'love', 'fear', 'joy', 'sadness', 'surprise']  # Update according to your dataset
+            emotion_labels = ['sadness', 'joy','love','anger','fear','surprise'  ]  # Update according to your dataset
             predicted_emotion = emotion_labels[predicted_class]
 
             # Display the result
