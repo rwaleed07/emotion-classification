@@ -1,25 +1,21 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
+import re
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
 
-# Error handling for NLTK data downloads
-try:
-    nltk.download('punkt')
-    nltk.download('stopwords')
-    nltk.download('wordnet')
-except Exception as e:
-    st.write("Error downloading NLTK data: ", e)
-
 # Initialize tools
-lemmatizer = WordNetLemmatizer()
-stop_words = set(stopwords.words('english'))
+stop_words = {'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself', 'yourselves', 
+              'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 
+              'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those', 'am', 'is', 'are', 'was', 
+              'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 
+              'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 
+              'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 
+              'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 
+              'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 
+              'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now'}
 
 # Load the model with error handling
 model_path = 'emotion_classification_model.h5'  # Replace with the actual path
@@ -37,12 +33,14 @@ try:
 except Exception as e:
     st.write("Error initializing/loading tokenizer: ", e)
 
-# Function to preprocess text
+# Function to preprocess text without NLTK
 def preprocess_text(text):
     try:
+        # Lowercase and remove non-alphabetic characters
         text = text.lower()
-        tokens = word_tokenize(text)
-        tokens = [lemmatizer.lemmatize(word) for word in tokens if word.isalpha() and word not in stop_words]
+        tokens = re.findall(r'\b\w+\b', text)
+        # Remove stopwords
+        tokens = [word for word in tokens if word not in stop_words]
         return " ".join(tokens)
     except Exception as e:
         st.write("Error in preprocessing: ", e)
@@ -81,5 +79,6 @@ if st.button("Classify"):
             st.write("Error during prediction: ", e)
     else:
         st.write("Please enter some text for classification.")
+
 
 
