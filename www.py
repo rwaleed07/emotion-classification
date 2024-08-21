@@ -7,6 +7,7 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.preprocessing.text import Tokenizer
 
 # Error handling for NLTK data downloads
 try:
@@ -26,6 +27,15 @@ try:
     model = load_model(model_path)
 except Exception as e:
     st.write("Error loading model: ", e)
+
+# Initialize or load tokenizer (update this to match your training setup)
+try:
+    tokenizer = Tokenizer()  # Define the tokenizer
+    # If you have a saved tokenizer, load it here:
+    # with open('tokenizer.pickle', 'rb') as handle:
+    #     tokenizer = pickle.load(handle)
+except Exception as e:
+    st.write("Error initializing/loading tokenizer: ", e)
 
 # Function to preprocess text
 def preprocess_text(text):
@@ -71,4 +81,5 @@ if st.button("Classify"):
             st.write("Error during prediction: ", e)
     else:
         st.write("Please enter some text for classification.")
+
 
