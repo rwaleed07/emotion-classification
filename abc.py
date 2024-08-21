@@ -89,8 +89,6 @@ if st.button("Classify"):
             prediction = model.predict(text_pad)
             predicted_class = np.argmax(prediction, axis=1)[0]
           
-# Debugging: Display the prediction probabilities
-st.write(f"Prediction Probabilities: {prediction}")
 
 predicted_class = np.argmax(prediction, axis=1)[0]
 
