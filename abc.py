@@ -26,14 +26,11 @@ model = load_model(model_path)
 # Compile the model (if you need to use metrics)
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 def preprocess_text(text):
-    # Remove HTML tags
-    text = BeautifulSoup(text, "html.parser").get_text()
+    
 
     # Convert to lowercase
     text = text.lower()
 
-    # Remove emojis
-    text = emoji.demojize(text)
 
     # Remove special characters and number
     text = re.sub(r'[@#%&*^$£!()-_+={}\[\]:;<>,.?\/\\\'"`~]', '', text)
