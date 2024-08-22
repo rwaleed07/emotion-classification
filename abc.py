@@ -6,7 +6,7 @@ import re
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-import emoji
+
 from bs4 import BeautifulSoup
 
 nltk.download('stopwords')
